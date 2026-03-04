@@ -74,16 +74,23 @@ int main(){
             { // hvis vi er i en etasje
                 elevio_doorOpenLamp(1);
                 while (elevio_stopButton()) {   
+                    slettAlleBestillinger();
                 }
+             
                 telle3sek();
                 elevio_doorOpenLamp(0); // slår av stopp-lampen når den ikke trykkes lenger
+            } else {
+                //mellom etasjer, bare vent til knappen slippes
+                while(elevio_stopButton()) {
+                }
             }
         } else {
             elevio_stopLamp(0); // slår av stopp-lampen når den ikke trykkes lenger
             
-        }   
-        nanosleep(&(struct timespec){0, 20*1000*1000}, NULL);
+        }
+    nanosleep(&(struct timespec){0, 20*1000*1000}, NULL);   
+    
     }
     return 0;
 } // halla
-// balla 
+// balla nye endringer er gjort 

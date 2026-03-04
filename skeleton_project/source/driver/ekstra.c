@@ -19,6 +19,29 @@ void slettAlleBestillinger() {
 void telle3sek() {
     time_t tidspunkt = time(NULL); // setter tidspunkt lik tiden nå
     while(time(NULL)-tidspunkt < 3) { // sjekker om det har gått 3 sek 
+        for(int f = 0; f < N_FLOORS; f++){ // går gjennom alle etasjer
+            if(elevio_callButton(f, BUTTON_HALL_UP)) { // hvis hall up knapp trykket på
+                heis.hallup[f] = 1; // 
+            }  
+            if(elevio_callButton(f, BUTTON_HALL_DOWN)) {//hvis hall down knapp trykket på
+                heis.halldown[f] = 1; // 
+            }
+            if(elevio_callButton(f, BUTTON_CAB)){//hvis cab knapp trykket på
+                heis.cab[f] = 1;
+            }
+            // dette er for at vi fortsatt skal kunne lytte til knappene selv om vi teller til 3
+             // går gjennom alle knapper i alle etasjer og setter på lampe om den er trukket på
+            elevio_buttonLamp(f, BUTTON_HALL_UP,   heis.hallup[f]);
+            elevio_buttonLamp(f, BUTTON_HALL_DOWN, heis.halldown[f]);
+            elevio_buttonLamp(f, BUTTON_CAB,       heis.cab[f]);
+        }
+        
+        if(elevio_obstruction()) {
+            tidspunkt = time(NULL); // hver gang obstruksjon er aktiviert reset timeren til nå
+            // døren forblir åpen så lenge obstruksjonen er aktiv, og lukker seg 3 sek etter at den slippes
+        }
+
+        nanosleep(&(struct timespec){0, 20*1000*1000}, NULL); // <
     }
 
 }

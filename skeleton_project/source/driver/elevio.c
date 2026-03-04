@@ -5,12 +5,15 @@
 #include <netdb.h>
 #include <stdio.h>
 #include <pthread.h>
+#include <netinet/tcp.h>
 
 #include "elevio.h"
 #include "con_load.h"
 
+
 static int sockfd;
 static pthread_mutex_t sockmtx;
+
 
 void elevio_init(void){
     char ip[16] = "localhost";
@@ -34,10 +37,14 @@ void elevio_init(void){
     getaddrinfo(ip, port, &hints, &res);
     
     int fail = connect(sockfd, res->ai_addr, res->ai_addrlen);
-    assert(fail == 0 && "Unable to connect to elevator server");
-    
+
+   
+    assert(fail == 0 && "Unable to connect to elevator server"); 
+    // ikke vent med å sende packets, sendes små packets , forhåpentligvis gjør at ting går raskere
+    int flag = 1;
+    setsockopt(sockfd, IPPROTO_TCP, TCP_NODELAY, &flag, sizeof(flag));
+    // -hør med studass
     freeaddrinfo(res);
-    
     send(sockfd, (char[4]){0}, 4, 0);
 }
 
