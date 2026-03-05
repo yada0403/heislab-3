@@ -48,9 +48,9 @@ void telle3sek() {
 
 void oppstart() {
     heis.currentFloor = 0; // setter at heisen starter i etasje 0
-    heis.currentDirection = DIRN_STOP;; // setter retningen opp
+    heis.currentDirection = DIRN_STOP;; // stopper 
     slettAlleBestillinger(); 
-    elevio_motorDirection(DIRN_STOP);//setter retning 
+    //elevio_motorDirection(DIRN_STOP);//setter retning 
     elevio_doorOpenLamp(0); // dørenåpen lampen er av
     elevio_stopLamp(0); // stopp knappen er av
 
@@ -61,8 +61,8 @@ void oppstart() {
     } 
     elevio_motorDirection(DIRN_STOP);//setter retning 
     heis.currentFloor = 0;
-    elevio_doorOpenLamp(0); // dørenåpen lampen er av
-    elevio_stopLamp(0); // stopp knappen er av
+    //elevio_doorOpenLamp(0); // dørenåpen lampen er av
+    //elevio_stopLamp(0); // stopp knappen er av
 
     // // if ( elevio_floorSensor()==0) { // når den har kommet til første etasje 
 };

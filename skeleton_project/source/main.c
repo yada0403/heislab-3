@@ -76,7 +76,7 @@ int main(){
                 while (elevio_stopButton()) {   
                     slettAlleBestillinger();
                 }
-             
+                elevio_stopLamp(0);
                 telle3sek();
                 elevio_doorOpenLamp(0); // slår av stopp-lampen når den ikke trykkes lenger
             } else {
